@@ -6,6 +6,11 @@ import tigateway.peripheral.TiRS485;
 import tijos.framework.devicecenter.TiUART;
 import tijos.framework.util.Delay;
 
+/**
+ * MOBDBUS RTU 例程
+ * @author TiJOS
+ *
+ */
 public class modbusSample {
 	public static void main(String[] args) {
 
