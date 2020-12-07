@@ -1,2 +1,13 @@
-# TiGW200-Cat1
-TiGW200 Cat1 gateway for double RS485 to LTE Cat1 network
+# TiGW200 可编程4G数传控制器
+TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可编程数传控制器， 用户可通过Java语言开发控制器内部的应用和控制逻辑以及与云平台交互过程。
+
+相关目录
+
+
+
+| 目录 | 说明         |
+| ---- | ------------ |
+| DOC  | 相关文档说明 |
+| SDK  | SDK          |
+| SRC  | 组件代码     |
+
