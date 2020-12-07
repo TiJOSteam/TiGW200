@@ -14,9 +14,9 @@ TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可�
 
 ### 创建TiJOS Application工程
 
-TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修改或者新建一个TiJOS Application工程，加入TiJOS Driver Library, 具体过程请参考<新建工程Hello TiJOS>文档， 在新建工程后， 将TiBOX-xxx.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，如下图所示：
+TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修改或者新建一个TiJOS Application工程，具体过程请参考<新建工程Hello TiJOS>文档， 在新建工程后， 将TiGW200-1.0.x.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，如下图所示：
 
-![1538273694997](.\img\1538273694997.png)
+![1538273694997](./img/1538273694997.png)
 
 ### 编码
 
@@ -26,7 +26,7 @@ TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修
 
 代码无误后， 可通过Run As菜单选择"TiJOS Application"运行， 在运行之前请确保已正确连接在TiBOX的USB编程口， 可从TiJOS LogCat中查看日志或打开TiDevManager查看日志。
 
-![1538273833609](.\img\1538273833609.png)
+![1538273833609](./img/1538273833609.png)
 
 ## TiDevManager设备管理器
 
@@ -34,11 +34,11 @@ TiDevManager设备管理器是钛极OS(TiJOS)开发套件TiStudio的组成部分
 
 TiDevManager可通过Eclipse的菜单启动。
 
-![1538274075455](.\img\1538274075455.png)
+![1538274075455](./img/1538274075455.png)
 
 启动后， 可连接设备查看设备及应用信息
 
-![1538275622754](.\img\1538275622754.png)
+![1538275622754](./img/1538275622754.png)
 
 
 
