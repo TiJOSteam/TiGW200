@@ -17,9 +17,7 @@ public class WatchDog extends Thread {
 				wdtPin.writePin(pinId, 0);
 				Delay.msDelay(1000);
 				wdtPin.writePin(pinId, 1);
-				Delay.msDelay(1000);
-				
-				System.out.println("trigger");
+				Delay.msDelay(1000);				
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

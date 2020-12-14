@@ -4,6 +4,7 @@ import tigateway.TiGW200;
 import tijos.framework.platform.TiPower;
 import tijos.framework.platform.lpwan.lte.ILTEEventListener;
 import tijos.framework.platform.lpwan.lte.TiLTE;
+import tijos.framework.platform.lpwan.lte.TiLTECell;
 import tijos.framework.util.Delay;
 
 /**
@@ -89,6 +90,15 @@ public class LTENetworkSample {
 
 			// SIM卡ICCID编号
 			System.out.println("ICCID " + TiLTE.getInstance().getICCID());
+			
+			//基站信息 可用于基站定位
+			TiLTECell cellInfo = TiLTE.getInstance().getCellInfo();
+			
+			System.out.println("CI " + cellInfo.getCI());
+			System.out.println("LAC" + cellInfo.getLAC());
+			System.out.println("MCC " + cellInfo.getMCC());
+			System.out.println("MNC " + cellInfo.getMNC());
+					
 			}
 			catch(IOException ex)
 			{

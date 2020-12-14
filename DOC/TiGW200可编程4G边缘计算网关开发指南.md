@@ -1,8 +1,8 @@
-# TiGW200 可编程4G数传控制器开发指南
+# TiGW200 可编程4G边缘计算网关开发指南
 
-TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可编程数传控制器， 用户可通过Java语言开发控制器内部的应用和控制逻辑以及与云平台交互过程。 
+TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可编程边缘计算网关， 用户可通过Java语言开发控制器内部的应用和控制逻辑以及与云平台交互过程。 
 
-在使用TiGW200 可编程数据控制器开发之前 ，建议用户先通过钛极OS(TJOS)物联网开发套件熟悉相关的开发过程，相关套件可通过在线商城进行购买, 在本产品的SDK中包含了部分教程方便用户快速了解开发过程。 
+在使用TiGW200可编程边缘计算网关开发之前 ，建议用户先通过钛极OS(TJOS)物联网开发套件熟悉相关的开发过程，相关套件可通过在线商城进行购买, 在本产品的SDK中包含了部分教程方便用户快速了解开发过程。 
 
 ## 准备开发环境
 
@@ -14,7 +14,9 @@ TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可�
 
 ### 创建TiJOS Application工程
 
-TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修改或者新建一个TiJOS Application工程，具体过程请参考<新建工程Hello TiJOS>文档， 在新建工程后， 将TiGW200-1.0.x.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，如下图所示：
+TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修改或者新建一个TiJOS Application工程，具体过程请参考[欢迎来到TiJOS世界—新建工程Hello TiJOS - 文档中心](http://dev.tijos.net/docstore/tijos-development-course2/introductory/LESSON5/hello_tijos/)
+
+ 在新建工程后， 将TiGW200-1.0.x.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，如下图所示：
 
 ![1538273694997](./img/1538273694997.png)
 
@@ -30,7 +32,7 @@ TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修
 
 ## TiDevManager设备管理器
 
-TiDevManager设备管理器是钛极OS(TiJOS)开发套件TiStudio的组成部分， 用于查看设备信息及应用管理的工具，也可单独运行，详细使用方法请参考文档<TiDevManager设备管理器应用>。
+TiDevManager设备管理器是钛极OS(TiJOS)开发套件TiStudio的组成部分， 用于查看设备信息及应用管理的工具，也可单独运行，详细使用方法请参考[初识TiDevManager设备管理器 - 文档中心 (tijos.net)](http://dev.tijos.net/docstore/tijos-development-course/step2-device_manager/about_tidevmanager/)
 
 TiDevManager可通过Eclipse的菜单启动。
 
@@ -46,7 +48,7 @@ TiDevManager可通过Eclipse的菜单启动。
 
 TiGW200 内置钛极OS(TiJOS) 操作系统， 支持通过Java语言进行应用开发，可通过钛极OS(TiJOS) 开发工具链IDE进行应用开发， 钛极OS(TiJOS)在线文档可参考 doc.tijos.net
 
-### TiGW200 Java类使用 说明
+### TiGW200 Java类使用说明
 
 #### 外设访问
 
@@ -54,7 +56,7 @@ tigateway.TiGW200类提供了TiGW200所支持的硬件资源访问， 包括RS48
 
 ##### RS485
 
-TiGW200支持2路RS485, 对应于通道0，通道1， 每1路支持最大驱动32个RS485从设备。 
+TiGW200支持2路RS485, 对应于通道1，通道2， 每1路支持最大驱动32个RS485从设备。 
 
 ##### 可控LED 
 
@@ -208,7 +210,7 @@ MODBUS 组件的调用过程一般为：
 | 0x0000     | 空气湿度 | 只读     | 0x00(0)--0x03E7(999) 对应 0%--99.9% 数值放大了10倍 |
 | 0x0001     | 空气温度 | 只读     | 0x8190(-400)--0x0320(800) 对应 -40℃--80℃ 负数      |
 
-
+源码请参考： https://github.com/TiJOSteam/TiGW200-Cat1/blob/main/SDK/sample/modbus-rtu/src/modbusSample.java
 
 #### 代码调用过程
 
@@ -216,7 +218,7 @@ MODBUS 组件的调用过程一般为：
 
    ```java
    TiGW200 gw200 = TiGW200.getInstance();
-   //获取0通道RS485
+   //获取RS485通道1 
    TiRS485 rs485 = gw200.getRS485(0, 9600, TiUART.PARITY_NONE);
    ```
 
@@ -280,6 +282,10 @@ TiLTE为单例，在操作网络时可通过getInstance获得实例并调用相�
 | TiLTECell getCellInfo()                         | 获取基站信息                                       |
 
 TiLTE类中他方法的技术说明请参考TiJOS Framework说明文档。
+
+
+
+源码请参考： https://github.com/TiJOSteam/TiGW200-Cat1/blob/main/SDK/sample/modbus-rtu/src/LTENetworkSample.java
 
 
 

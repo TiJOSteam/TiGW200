@@ -15,7 +15,7 @@ public class modbusSample {
 	public static void main(String[] args) {
 
 		try {
-			System.out.println("This is a modbus rtu sample");
+			System.out.println("This is a modbus rtu sample.");
 
 			// 获取TiGW200对象并启动看门狗
 			TiGW200 gw200 = TiGW200.getInstance();
