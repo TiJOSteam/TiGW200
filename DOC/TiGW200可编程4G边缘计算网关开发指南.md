@@ -1,16 +1,46 @@
+# ![img](.\img\clip_image002.jpg)
+
+
+
+
+
 # TiGW200 可编程4G边缘计算网关开发指南
+
+
+
+## 目 录
+
+[TOC]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 产品介绍 
 
 TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可编程边缘计算网关， 用户可通过Java语言开发控制器内部的应用和控制逻辑以及与云平台交互过程。 
 
-在使用TiGW200可编程边缘计算网关开发之前 ，建议用户先通过钛极OS(TJOS)物联网开发套件熟悉相关的开发过程，相关套件可通过在线商城进行购买, 在本产品的SDK中包含了部分教程方便用户快速了解开发过程。 
+以下介绍如何在TiGW200网关进行应用开发, 更多内容可参考相关例程及钛OS(TiJOS)文档中心 http://doc.tijos.net
 
-## 准备开发环境
+ 
+
+##  准备开发环境
 
 ### 安装TiStudio
 
 在进行开发之前 ，请先安装Eclipse开发环境及TiStudio开发插件，请参考如下链接进行开发环境的安装。 
 
-[炼制驾驭小龟法宝与法宝试用—开发环境搭建与开发板测试 - 文档中心 (tijos.net)](http://dev.tijos.net/docstore/tijos-development-course2/introductory/LESSON3/tistudio_and_tikit_verification/)
+[开发环境搭建与开发板测试 - 文档中心 (tijos.net)](http://dev.tijos.net/docstore/tijos-development-course2/introductory/LESSON3/tistudio_and_tikit_verification/)
 
 ### 创建TiJOS Application工程
 
@@ -44,7 +74,7 @@ TiDevManager可通过Eclipse的菜单启动。
 
 
 
-## TiGW200  编程开发说明
+##  TiGW200  编程开发说明
 
 TiGW200 内置钛极OS(TiJOS) 操作系统， 支持通过Java语言进行应用开发，可通过钛极OS(TiJOS) 开发工具链IDE进行应用开发， 钛极OS(TiJOS)在线文档可参考 doc.tijos.net
 
