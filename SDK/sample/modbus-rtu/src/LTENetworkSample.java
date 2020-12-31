@@ -2,83 +2,74 @@ import java.io.IOException;
 
 import tigateway.TiGW200;
 import tijos.framework.platform.TiPower;
-import tijos.framework.platform.lpwan.lte.ILTEEventListener;
-import tijos.framework.platform.lpwan.lte.TiLTE;
-import tijos.framework.platform.lpwan.lte.TiLTECell;
+import tijos.framework.platform.lte.TiLTE;
+import tijos.framework.platform.lte.TiLTECell;
+import tijos.framework.platform.network.INetworkEventListener;
+import tijos.framework.platform.network.NetworkException;
+import tijos.framework.platform.network.NetworkInterface;
 import tijos.framework.util.Delay;
 
 /**
  * 4G 连接事件
+ * 
  * @author Administrator
  *
  */
-class LTEEventListener implements ILTEEventListener {
+class LTEEventListener implements INetworkEventListener {
 
 	/**
 	 * 基站连接成功
 	 */
 	@Override
 	public void onConnected() {
-		// TODO Auto-generated method stub
+		System.out.println("connected");
 
 	}
 
-	/**
-	 * 连接断开 
-	 * @param reason 断开原因
-	 */
 	@Override
-	public void onDisconnected(int reason) {
-		
-		//重新注网连接
-		try {
-			TiLTE.getInstance().startup(30, new LTEEventListener());
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//或重启设备
-//		try {
-//			TiPower.getInstance().reboot(0);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
+	public void onDisconnected(int code, String message) {
+
+		System.out.println("connect failed " + message);
+
 	}
 
 }
 
 /**
  * LTE 4G 网络例程
+ * 
  * @author Administrator
  *
  */
 public class LTENetworkSample {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 
-			// 获取TiGW200对象并启动看门狗
-			TiGW200 gw200 = TiGW200.getInstance();
+		// 获取TiGW200对象并启动看门狗
+		TiGW200 gw200 = TiGW200.getInstance();
+
+		// 启动4G网络,30秒超时, startup执行完成即连接成功，如果连接失败将通过IOException抛出异常
+		// 网络事件通过事件通知
+		try {
+			TiLTE.getInstance().startup(30);
+		} catch (NetworkException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			
-			try {
-			// 启动4G网络,30秒超时, startup执行完成即连接成功，如果连接失败将通过IOException抛出异常
-			// 网络事件通过事件通知
-			TiLTE.getInstance().startup(30, new LTEEventListener());
-			}
-			catch(IOException ex)
-			{
-				System.out.println("Failed to register LTE network. " + ex.getMessage());
-				ex.printStackTrace();
-				return ;
-			}
+		}
 
-			// 注网成功 蓝灯亮
-			gw200.blueLED().turnOn();
+		if (TiLTE.getInstance().getNetworkStatus() != NetworkInterface.NETSTATUS_CONNECTED) {
+			System.out.println("Failed to startup LTE network.");
+		}
+		else
+		{
+			System.out.println("Connected to LTE.");		
+		}
 
-			try {
+		// 注网成功 蓝灯亮
+		gw200.blueLED().turnOn();
+
+		try {
 			// 4G设备唯一ID
 			System.out.println("IMEI " + TiLTE.getInstance().getIMEI());
 
@@ -90,28 +81,25 @@ public class LTENetworkSample {
 
 			// SIM卡ICCID编号
 			System.out.println("ICCID " + TiLTE.getInstance().getICCID());
-			
-			//基站信息 可用于基站定位
+
+			// 基站信息 可用于基站定位
 			TiLTECell cellInfo = TiLTE.getInstance().getCellInfo();
-			
+
 			System.out.println("CI " + cellInfo.getCI());
 			System.out.println("LAC" + cellInfo.getLAC());
 			System.out.println("MCC " + cellInfo.getMCC());
 			System.out.println("MNC " + cellInfo.getMNC());
-					
-			}
-			catch(IOException ex)
-			{
-				ex.printStackTrace();
-			}
 
-			// 注网成功 蓝灯亮
-			gw200.blueLED().turnOff();
-			
-			Delay.msDelay(10000);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 
-			System.out.println("Exiting ...");
+		// 注网成功 蓝灯亮
+		gw200.blueLED().turnOff();
 
+		Delay.msDelay(10000);
+
+		System.out.println("Exiting ...");
 
 	}
 
