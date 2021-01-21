@@ -34,7 +34,7 @@ public class modbusSample {
 				gw200.greenLED().turnOn();
 				MonitorProcess(modbusRtu);
 				gw200.blueLED().turnOff();
-				Delay.msDelay(5000);
+				Delay.msDelay(2000);
 			}
 
 		} catch (IOException e) {
