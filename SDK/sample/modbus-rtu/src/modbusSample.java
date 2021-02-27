@@ -20,9 +20,11 @@ public class modbusSample {
 			// 获取TiGW200对象并启动看门狗
 			TiGW200 gw200 = TiGW200.getInstance();
 
+			// 获取第0路RS485 9600 8 1 N
+			TiSerialPort rs485 = gw200.getRS485(9600,8,1,TiUART.PARITY_NONE);
 
-			// 获取第1路RS485 9600 8 1 N
-			TiSerialPort rs485 = gw200.getRS485ById(1,9600,8,1,TiUART.PARITY_NONE);
+//			// 获取第1路RS485 9600 8 1 N
+//			TiSerialPort rs485 = gw200.getRS485ById(1,9600,8,1,TiUART.PARITY_NONE);
 
 			// MODBUS RTU
 			// 通讯超时500 ms
