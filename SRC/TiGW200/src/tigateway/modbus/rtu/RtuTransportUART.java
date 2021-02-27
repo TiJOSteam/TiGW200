@@ -3,15 +3,15 @@ package tigateway.modbus.rtu;
 import static tigateway.modbus.protocol.ModbusConstants.MAX_PDU_SIZE;
 
 import tigateway.modbus.protocol.ModbusPdu;
-import tigateway.peripheral.TiRS485;
+import tigateway.serialport.TiSerialPort;
 import tijos.framework.util.logging.Logger;
 
 /**
- * MODBUS RTU RS485 Transport
+ * MODBUS RTU Transport
  */
 public class RtuTransportUART {
 
-	TiRS485 serialPort;
+	TiSerialPort serialPort;
 
 	protected final int timeout;
 	protected final byte[] buffer = new byte[MAX_PDU_SIZE + 3]; // ADU: [ID(1), PDU(n), CRC(2)]
@@ -23,8 +23,8 @@ public class RtuTransportUART {
 	 * @param uart
 	 * @param timeout timeout for receiving data from UART
 	 */
-	public RtuTransportUART(TiRS485 rs485, int timeout) {
-		this.serialPort = rs485;
+	public RtuTransportUART(TiSerialPort serialPort, int timeout) {
+		this.serialPort = serialPort;
 
 		this.timeout = timeout;
 	}
@@ -44,7 +44,7 @@ public class RtuTransportUART {
 
 		Logger.info("Modbus", "Write: " + ModbusPdu.toHex(buffer, 0, size));
 
-		this.serialPort.write(buffer, size, MAX_PDU_SIZE, this.timeout);
+		this.serialPort.write(buffer, 0, size);
 	}
 
 	/**
@@ -54,13 +54,9 @@ public class RtuTransportUART {
 
 		expectedBytes = modbusClient.getExpectedPduSize() + 3; // id(1), PDU(n), crc(2)
 
-		int recvLen = this.serialPort.readRecvLen(this.timeout * 3);
-		if (recvLen < 3)
-			return ModbusRTU.RESULT_TIMEOUT;
-
 		// read id
-		if (this.serialPort.readData(this.buffer, 0, 1, this.timeout) < 1)
-			return ModbusRTU.RESULT_TIMEOUT;
+        if (!this.serialPort.readToBuffer(this.buffer, 0, 1, this.timeout))
+            return ModbusRTU.RESULT_TIMEOUT;
 
 		if (buffer[0] != modbusClient.getDeviceId()) {
 			logData("bad id", 0, 1);
@@ -69,10 +65,10 @@ public class RtuTransportUART {
 			return ModbusRTU.RESULT_BAD_RESPONSE;
 		}
 
-		// read function (bit7 means exception)
-		if (this.serialPort.readData(this.buffer, 1, 1, this.timeout) < 1)
-			return ModbusRTU.RESULT_TIMEOUT;
-
+       // read function (bit7 means exception)
+        if (!this.serialPort.readToBuffer(this.buffer, 1, 1, this.timeout))
+            return ModbusRTU.RESULT_TIMEOUT;
+ 
 		if ((buffer[1] & 0x7f) != modbusClient.getFunction()) {
 			logData("bad function", 0, 2);
 			Logger.warning("Modbus",
@@ -83,8 +79,8 @@ public class RtuTransportUART {
 		if ((buffer[1] & 0x80) != 0) {
 			// EXCEPTION
 			expectedBytes = 5; // id(1), function(1), exception code(1), crc(2)
-			if (this.serialPort.readData(this.buffer, 2, 3, this.timeout) != 3) // exception code + CRC
-				return ModbusRTU.RESULT_TIMEOUT;
+            if (!this.serialPort.readToBuffer(this.buffer, 2, 3, this.timeout)) // exception code + CRC
+                return ModbusRTU.RESULT_TIMEOUT;
 
 			if (crcValid(3)) {
 				logData("exception", 0, expectedBytes);
@@ -96,12 +92,10 @@ public class RtuTransportUART {
 				return ModbusRTU.RESULT_BAD_RESPONSE;
 			}
 		} else {
-			int readLen = modbusClient.getExpectedPduSize() + 1;
-			// NORMAL RESPONSE
-			if (this.serialPort.readData(this.buffer, 2, readLen, this.timeout) != readLen) // data + CRC (without
-																							// function)
-				return ModbusRTU.RESULT_TIMEOUT;
-
+	           // NORMAL RESPONSE
+            if (!this.serialPort.readToBuffer(this.buffer, 2, modbusClient.getExpectedPduSize() + 1, this.timeout)) // data + CRC (without function)
+                return ModbusRTU.RESULT_TIMEOUT;
+ 
 			// CRC check of (serverId + PDU)
 			if (crcValid(1 + modbusClient.getExpectedPduSize())) {
 				logData("normal", 0, expectedBytes);

@@ -2,7 +2,7 @@ import java.io.IOException;
 
 import tigateway.TiGW200;
 import tigateway.modbus.rtu.ModbusRTU;
-import tigateway.peripheral.TiRS485;
+import tigateway.serialport.TiSerialPort;
 import tijos.framework.devicecenter.TiUART;
 import tijos.framework.util.Delay;
 
@@ -22,7 +22,7 @@ public class modbusSample {
 
 
 			// 获取第1路RS485 9600 8 1 N
-			TiRS485 rs485 = gw200.getRS485(0, 9600, TiUART.PARITY_NONE);
+			TiSerialPort rs485 = gw200.getRS485ById(1,9600,8,1,TiUART.PARITY_NONE);
 
 			// MODBUS RTU
 			// 通讯超时500 ms

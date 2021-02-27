@@ -4,7 +4,7 @@
 
 
 
-# TiGW200 可编程4G边缘计算网关开发指南
+# TiGW200 可编程4G边缘计算网关开发指南(V2.0)
 
 
 
@@ -106,43 +106,29 @@ TiGW200内置硬件看门狗， 在TiGW200.getInstance()中会自动启动，用
 
 为了方便用户在程序中访问外设， TiGW200提供了JAVA类开源组件
 
-| 方法                                                | 说明                                                         |
-| --------------------------------------------------- | ------------------------------------------------------------ |
-| **RS485**                                           |                                                              |
-| TiRS485 getRS485(int chn, int baudRate, int parity) | 获取RS485接口， 参数：通道（0或1）波特率，校验位，（数据位，停止位固定为8,1) |
-| **LED灯**                                           |                                                              |
-| TiLED blueLED()                                     | 获取蓝色灯对象                                               |
-| TiLED greenLED()                                    | 获取绿色灯对象                                               |
-|                                                     |                                                              |
-
-### TiRS485串口类主要方法使用说明
-
-通过getRS485获取串口后，即可对串口进行读写操作
-
-#### 写入数据write
-
-void write(byte[] request, int reqLen, int recvLen, int recvTimeout)
-
-写入数据到串口
-
-recvLen, recvTimeout用于设置RS485设备返回数据的长度和最大超时时间，可根据设备的通讯协议和规格进行设置，如果不确定，可使用设备设计的最大时间
-
-| 参数        | 说明                                                         |
-| ----------- | ------------------------------------------------------------ |
-| request     | 待写入数据缓存区                                             |
-| reqLen      | 写入数据长度                                                 |
-| recvLen     | 期望返回数据长度，如果不确定可设置最大长度                   |
-| recvTimeout | 返回数据最大超时时间，如果不确定可设置设备返回结果的最大时间 |
+| 方法                                                         | 说明                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **RS485**                                                    |                                                              |
+| TiSerialPort getRS485(int baudRate, int dataBitNum, int stopBitNum, int parity) | 获取0通道RS485接口， 参数：波特率，数据位，停止位，校验位    |
+| TiSerialPort getRS485ById(int id, int dataBitNum, int stopBitNum, int parity) | 获取指定ID通道RS485接口，支持通道0和通道1， 参数：通道ID， 波特率，数据位，停止位，校验位 |
+| **LED灯**                                                    |                                                              |
+| TiLED blueLED()                                              | 获取蓝色灯对象                                               |
+| TiLED greenLED()                                             | 获取绿色灯对象                                               |
+|                                                              |                                                              |
 
 
 
-#### 读取数据read
+### TiSerialPort  串口类主要方法使用说明
 
-byte[] read(int timeout) 
+通过getRS485或getRS485ById获取串口后，即可对串口进行读写操作
 
-从串口读取数据，参数timeout为最大超时
-
-**返回值 **： 读取到的数据 ，返回null为无数据
+| 方法                                                         | 说明                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| void write(byte [] buffer ,int start ,int length)            | 写入数据到串口 buffer: 待写入数据  start  缓存区开始位置 length 写入长度 |
+| boolean readToBuffer(byte[] buffer, int start, int length, int timeOut) | 从串口读取指定长度数据  buffer: 读入数据缓存区，start 缓存区开始位置 ，length 读取长度 ， timeOut超时，单位毫秒 |
+| byte [] read(int msec)                                       | 从串口读数据, msec 最大毫秒数， 当有数据时从串口指定时间的数据返回， 如果没有数据则返回null |
+| byte[] read()                                                | 从串口读数据, 有数据时立即返回读取到的数据，否则返回null     |
+| void clearInput()                                            | 清除输入缓存区                                               |
 
 
 
@@ -168,13 +154,13 @@ byte[] read(int timeout)
 
 Modbus 一个工业上常用的通讯协议, 其中MODBUS-RTU在支持串口的设备中最为常用， 目前市面上很多设备和传感器都提供MODBUS-RTU的协议支持。 
 
-TiGW200提供了相应的MODBUS RTU组件方便用户在代码中直接访问MODBUS RTU设备。
+TiGW1000提供了相应的MODBUS RTU组件方便用户在代码中直接访问MODBUS RTU设备。
 
 ### 主要接口
 
 | 函数                                                         | 说明                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ModbusClient(TiRS485 serialPort,  int timeout)               | 初始化，serialPort: RS485通讯对象， timeout: RS485设备通讯超时时间 |
+| ModbusClient(TiSerialPort serialPort,  int timeout)          | 初始化，serialPort:  串口通讯对象， timeout: RS485设备通讯超时时间 |
 | **初始化寄存器请求**                                         | 根据参数构造MODBUS寄存器请求                                 |
 | initReadCoilsRequest(int deviceId, int startAddress, int count) | 初始化Read Coils 请求                                        |
 | initWriteCoilRequest(int deviceId, int coilAddress, boolean value) | 初始化WRITE COIL register 请求- 单寄存器操作i                |
@@ -209,7 +195,7 @@ TiGW200提供了相应的MODBUS RTU组件方便用户在代码中直接访问MOD
 
 MODBUS 组件的调用过程一般为：
 
-1. 指定串口实例化MODBUS对象，ModbusClient(TiRS485 serialPort,  int timeout)
+1. 指定串口实例化MODBUS对象，ModbusClient(TiSerialPort serialPort,  int timeout)
 
 2. 初始化MODBUS寄存器读写操作请求， initXXXRequest 
 
@@ -223,7 +209,7 @@ MODBUS 组件的调用过程一般为：
 
 **场景**：
 
-设备通过RS485连接到TiGW200， 通讯MODBUS RTU协议进行数据交互
+设备通过RS485连接到TiGW1000， 通讯MODBUS RTU协议进行数据交互
 
 **设备通讯参数**
 
@@ -231,6 +217,8 @@ MODBUS 组件的调用过程一般为：
 | ------- | ---- |
 | 设备 ID | 1    |
 | 波特率  | 9600 |
+| 数据位  | 8    |
+| 停止位  | 1    |
 | 校验位  | 无   |
 
 **寄存器**： INPUT REGISTER  (03)  
@@ -240,16 +228,16 @@ MODBUS 组件的调用过程一般为：
 | 0x0000     | 空气湿度 | 只读     | 0x00(0)--0x03E7(999) 对应 0%--99.9% 数值放大了10倍 |
 | 0x0001     | 空气温度 | 只读     | 0x8190(-400)--0x0320(800) 对应 -40℃--80℃ 负数      |
 
-源码请参考： https://github.com/TiJOSteam/TiGW200-Cat1/blob/main/SDK/sample/modbus-rtu/src/modbusSample.java
+
 
 #### 代码调用过程
 
-1. 打开RS485并获取TiRS485对象
+1. 打开RS485并获取TiSerialPort对象
 
    ```java
    TiGW200 gw200 = TiGW200.getInstance();
-   //获取RS485通道1 
-   TiRS485 rs485 = gw200.getRS485(0, 9600, TiUART.PARITY_NONE);
+   //获取RS485 
+   TiSerialPort rs485 = gw200.getRS485(9600,8,1,0);
    ```
 
 2. 创建MODBUS协议对象并挂接RS485
@@ -282,6 +270,8 @@ MODBUS 组件的调用过程一般为：
       	int humdity = modbusRtu.getResponseInt16(startAddr + 1, false);
       }
    ```
+
+
 
 
 

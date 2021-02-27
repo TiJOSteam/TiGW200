@@ -3,7 +3,7 @@ package tigateway.modbus.rtu;
 import static tigateway.modbus.protocol.ModbusConstants.*;
 
 import tigateway.modbus.protocol.ModbusPdu;
-import tigateway.peripheral.TiRS485;
+import tigateway.serialport.TiSerialPort;
 import tijos.framework.util.logging.Logger;
 
 /**
@@ -42,7 +42,7 @@ public class ModbusRTU extends ModbusPdu {
      *
      * @param serialPort serial port
      */
-    public ModbusRTU(TiRS485 serialPort) {
+    public ModbusRTU(TiSerialPort serialPort) {
         this(serialPort, 2000);
     }
 
@@ -53,7 +53,7 @@ public class ModbusRTU extends ModbusPdu {
      * @param timeout    read timeout
      * @param pause      pause after send data
      */
-    public ModbusRTU(TiRS485 serialPort, int timeout) {
+    public ModbusRTU(TiSerialPort serialPort, int timeout) {
         RtuTransportUART rtu = new RtuTransportUART(serialPort, timeout);
         setTransport(rtu);
     }
