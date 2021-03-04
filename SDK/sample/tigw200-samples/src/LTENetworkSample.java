@@ -1,39 +1,11 @@
 import java.io.IOException;
 
 import tigateway.TiGW200;
-import tijos.framework.platform.TiPower;
 import tijos.framework.platform.lte.TiLTE;
 import tijos.framework.platform.lte.TiLTECell;
-import tijos.framework.platform.network.INetworkEventListener;
 import tijos.framework.platform.network.NetworkException;
 import tijos.framework.platform.network.NetworkInterface;
 import tijos.framework.util.Delay;
-
-/**
- * 4G 连接事件
- * 
- * @author Administrator
- *
- */
-class LTEEventListener implements INetworkEventListener {
-
-	/**
-	 * 基站连接成功
-	 */
-	@Override
-	public void onConnected() {
-		System.out.println("connected");
-
-	}
-
-	@Override
-	public void onDisconnected(int code, String message) {
-
-		System.out.println("connect failed " + message);
-
-	}
-
-}
 
 /**
  * LTE 4G 网络例程
