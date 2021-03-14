@@ -46,21 +46,35 @@ TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可�
 
 TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修改或者新建一个TiJOS Application工程，具体过程请参考[欢迎来到TiJOS世界—新建工程Hello TiJOS - 文档中心](http://dev.tijos.net/docstore/tijos-development-course2/introductory/LESSON5/hello_tijos/)
 
- 在新建工程后， 将TiGW200-1.0.x.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，如下图所示：
+TiGW200提供了两个JAR包，TiGW200-2.0.x.jar是依赖库， TiGW200-2.0.x-sources.jar 是对应的源码，方便用在Eclipse中直接查看对应的库中的源码。
+
+在新建工程后， 将TiGW200-2.0.x.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，同时可将源码包加到配置中， 如下图所示：
 
 ![1538273694997](./img/1538273694997.png)
+
+关联库的源码
+
+![image-20210314094624802](.\img\image-20210314094624802.png)
+
+双击Source attachement或点击Edit按钮
+
+![image-20210314094720255](.\img\image-20210314094720255.png)
+
+选择对应的TiGW200-2.0.X-sources.jar包文件即可。 
+
+当需要时， 在工程中双击对应的class文件即可看到对应的源码
+
+![image-20210314094906865](.\img\image-20210314094906865.png)
 
 ### 编码
 
 此时，即可在Eclipse中进行相应的代码编写。
 
-### 下载、运行
+### 连接设备
 
-代码无误后， 可通过Run As菜单选择"TiJOS Application"运行， 在运行之前请确保已正确连接在TiBOX的USB编程口， 可从TiJOS LogCat中查看日志或打开TiDevManager查看日志。
+通过USB口连接设备，在Eclipse中打开TiDevManager
 
-![1538273833609](./img/1538273833609.png)
-
-## TiDevManager设备管理器
+#### TiDevManager设备管理器
 
 TiDevManager设备管理器是钛极OS(TiJOS)开发套件TiStudio的组成部分， 用于查看设备信息及应用管理的工具，也可单独运行，详细使用方法请参考[初识TiDevManager设备管理器 - 文档中心 (tijos.net)](http://dev.tijos.net/docstore/tijos-development-course/step2-device_manager/about_tidevmanager/)
 
@@ -72,7 +86,13 @@ TiDevManager可通过Eclipse的菜单启动。
 
 ![1538275622754](./img/1538275622754.png)
 
+连接成功后， 可查看到设备相关信息， 如果连接失败，请确认设备内是否有应用已设置为自动运行， 此时可通过按下FN键并重新上电，切换到开发模式下重新连接。
 
+### 下载、运行
+
+代码无误后， 可通过Run As菜单选择"TiJOS Application"运行， 在运行之前请确保已正确连接在TiBOX的USB编程口， 可从TiJOS LogCat中查看日志或打开TiDevManager查看日志。
+
+![1538273833609](./img/1538273833609.png)
 
 ##  TiGW200  编程开发说明
 
@@ -162,14 +182,14 @@ TiGW1000提供了相应的MODBUS RTU组件方便用户在代码中直接访问MO
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | ModbusClient(TiSerialPort serialPort,  int timeout)          | 初始化，serialPort:  串口通讯对象， timeout: RS485设备通讯超时时间 |
 | **初始化寄存器请求**                                         | 根据参数构造MODBUS寄存器请求                                 |
-| initReadCoilsRequest(int deviceId, int startAddress, int count) | 初始化Read Coils 请求                                        |
-| initWriteCoilRequest(int deviceId, int coilAddress, boolean value) | 初始化WRITE COIL register 请求- 单寄存器操作i                |
-| initWriteCoilsRequest(int deviceId, int startAddress, boolean[] values) | 初始化WRITE MULTIPLE COILS registers 请求- 多寄存器操作      |
-| initReadHoldingsRequest(int deviceId, int startAddress, int count) | 初始化READ HOLDING REGISTERs 请求                            |
-| initReadDInputsRequest(int deviceId, int startAddress, int count) | 初始化READ DISCRETE INPUT REGISTERs 请求                     |
-| initReadAInputsRequest(int deviceId, int startAddress, int count) | 初始化READ INPUT REGISTERs 请求                              |
-| initWriteRegisterRequest(int deviceId, int regAddress, int value) | 初始化WRITE SINGLE REGISTER 请求 - 单寄存器操作              |
-| initWriteRegistersRequest(int deviceId, int startAddress, int[] values) | 初始化WRITE MULTIPLE 请求 - 多寄存器操作                     |
+| initReadCoilsRequest(int deviceId, int startAddress, int count) | 初始化Read Coils 请求, MODBUS功能码 0x01                     |
+| initWriteCoilRequest(int deviceId, int coilAddress, boolean value) | 初始化WRITE COIL register 请求- 单寄存器操作， MODBUS功能码 0x05 |
+| initWriteCoilsRequest(int deviceId, int startAddress, boolean[] values) | 初始化WRITE MULTIPLE COILS registers 请求- 多寄存器操作， MODBUS 功能码 0x15 |
+| initReadHoldingsRequest(int deviceId, int startAddress, int count) | 初始化READ HOLDING REGISTERs 请求 , MODBUS功能码 0x03        |
+| initReadDInputsRequest(int deviceId, int startAddress, int count) | 初始化READ DISCRETE INPUT REGISTERs 请求,  MODBUS功能码 0x02 |
+| initReadAInputsRequest(int deviceId, int startAddress, int count) | 初始化READ INPUT REGISTERs 请求, MODBUS功能码 0x04           |
+| initWriteRegisterRequest(int deviceId, int regAddress, int value) | 初始化WRITE SINGLE REGISTER 请求 - 单寄存器操作, MODBUS功能码 0x06 |
+| initWriteRegistersRequest(int deviceId, int startAddress, int[] values) | 初始化WRITE MULTIPLE 请求 - 多寄存器操作, MODBUS功能码 0x10  |
 | **执行请求**                                                 | 发送MODBUS请求到设备并获取返回数据                           |
 | int execRequest()                                            | 执行MODBUS 请求并获得MODBUS响应结果                          |
 | int getResponseAddress()                                     | 获取返回的MODBUS寄存器开始地址                               |
@@ -203,13 +223,25 @@ MODBUS 组件的调用过程一般为：
 
 4. 根据设备协议中定义的数据类型获取返回的寄存器值 getResponseBit/getResponseInt16/getResponseInt32/getResponseFloat
 
-   
+
+
+
+| MODBUS 功能码 | 对应的初始化请求接口      | 说明           |
+| ------------- | ------------------------- | -------------- |
+| 0x01          | initReadCoilsRequest      | 请取线圈状态   |
+| 0x02          | initReadDInputsRequest    | 读取输入状态   |
+| 0x03          | initReadHoldingsRequest   | 读取保持寄存器 |
+| 0x04          | initReadAInputsRequest    | 读取输入寄存器 |
+| 0x05          | initWriteCoilRequest      | 强置单线圈     |
+| 0x06          | initWriteRegisterRequest  | 预置单寄存器   |
+| 0x0F          | initWriteCoilsRequest     | 强置多线圈     |
+| 0x10          | initWriteRegistersRequest | 预置多寄存器   |
 
 ### 例程
 
 **场景**：
 
-设备通过RS485连接到TiGW1000， 通讯MODBUS RTU协议进行数据交互
+设备通过RS485连接到TiGW200， 通讯MODBUS RTU协议进行数据交互
 
 **设备通讯参数**
 
@@ -273,8 +305,6 @@ MODBUS 组件的调用过程一般为：
 
 
 
-
-
 ## 网络访问
 
 TiGW200支持 4G Cat1网络， 基于运营商现有的手机网络即可接入云平台。 
@@ -299,7 +329,7 @@ TiLTE为单例，在操作网络时可通过getInstance获得实例并调用相�
 | void getICCID()                                 | 获取SIM卡CCID字符串                                |
 | String getPDPIP()                               | 获取当前IP地址                                     |
 | int getRSSI()                                   | 获取当前信号强度                                   |
-| TiLTECell getCellInfo()                         | 获取基站信息                                       |
+| TiLTECell getCellInfo()                         | 获取基站信息， 可用于基站定位                      |
 
 TiLTE类中他方法的技术说明请参考TiJOS Framework说明文档。
 
@@ -358,6 +388,20 @@ TiJOS JDK与标准Java JDK兼容，本目录下列出了一些基于标准java�
 | Alibaba               | 阿里云物联网平台例程                     |
 | Tencent               | 腾讯云物联网平台例程                     |
 
+## 关于Exception
+
+Exception是JAVA语言的最常用的错误处理方式， 为了适用低资源设备，钛极OS在编译过程中会将类、方法名称简化为ID，在打印Exception时只能看到相关的ID， 如果需要查看ID与相应的类名称的对应关系， 可通过在导出TAPK的来查看，此时在Eclipse的编译输出中可以看到所有的类及方法对应的ID，从而方便快速查错。 
+
+#### 导出TAPK
+
+![image-20210314090805985](.\img\image-20210314090805985.png)
+
+![image-20210314090850577](.\img\image-20210314090850577.png)
+
+导出成功后， 即可在Eclipse的Console日志中看到相关的类及方法对应的ID,如下图所示
+
+![image-20210314092322540](.\img\image-20210314092322540.png)
+
 
 
 ## 常见Exception
@@ -392,9 +436,25 @@ TiJOS JDK与标准Java JDK兼容，本目录下列出了一些基于标准java�
 
 
 
+## 代码定位
+
+当发生Exception时， 可通过printStackTrace来输出调用栈， 在调用栈中会打印出相应的ClassNo, MethodNo,MethodPc, 通过这三个参数来定位具体的发生位置。
+
+点击Exception query弹出相应的窗口
+
+![image-20210314092720793](.\img\image-20210314092720793.png)
+
+选择对应的项目， 并输入位置信息，点击Query即可看到相应的位置信息， 如果有源码，点击Go即可定位到具体位置。 
+
+![image-20210314092843045](.\img\image-20210314092843045.png)
+
+
+
+
+
 ## 技术支持
 
-如果您有任何技术问题，可通过电话，QQ群等方式与我们联系， 同时钛云物联可提供产品定制，通讯协议开发，云端接入，技术培训等多种服务。
+如果您有任何技术问题，可通过电话，微信， QQ群等方式与我们联系， 同时钛云物联可提供产品定制，通讯协议开发，云端接入，技术培训等多种服务。
 
 ## 更多资源
 

@@ -78,8 +78,8 @@ public class MqttClientDemo {
 
         // MQTT Server 地址,用户名, 密码
         final String broker = "mqtt://test.mosquitto.org:1883";
-        final String username = "tijos/dev1";
-        final String password = "tWnuCZdmdgqn6uT6oaVjE1NwC9atipvOTxBA0Xn2QFQ=";
+        final String username = "123";
+        final String password = "123";
 
         // ClientID
         final String clientId = "mqtt_test_java_tijos";
