@@ -84,6 +84,10 @@ public class TiSerialPort {
 	public void write(byte[] buffer, int start, int length) throws IOException {
 		this.uart.write(buffer, start, length);
 	}
+	
+	public void write(byte [] buffer) throws IOException {
+		this.uart.write(buffer, 0, buffer.length);
+	}
 
 	/**
 	 * Read data from uart
@@ -147,7 +151,7 @@ public class TiSerialPort {
 	 * @throws IOException
 	 */
 	public boolean readToBuffer(byte[] buffer, int start, int length, int timeOut) throws IOException {
-
+		
 		long now = System.currentTimeMillis();
 		long deadline = now + timeOut;
 		int offset = start;
