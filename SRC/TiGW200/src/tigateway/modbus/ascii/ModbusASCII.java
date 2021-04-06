@@ -1,11 +1,8 @@
 package tigateway.modbus.ascii;
 
-import static tigateway.modbus.protocol.ModbusConstants.*;
 
 import tigateway.modbus.Modbus;
-import tigateway.modbus.protocol.ModbusPdu;
 import tigateway.serialport.TiSerialPort;
-import tijos.framework.util.logging.Logger;
 
 /**
  * MODBUS RTU driver for TiJOS based on https://github.com/sp20/modbus-mini

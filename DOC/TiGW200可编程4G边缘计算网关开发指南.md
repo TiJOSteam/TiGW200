@@ -170,17 +170,20 @@ TiGW200内置硬件看门狗， 在TiGW200.getInstance()中会自动启动，用
 
 
 
-## MODBUS RTU组件
+## MODBUS 组件
 
-Modbus 一个工业上常用的通讯协议, 其中MODBUS-RTU在支持串口的设备中最为常用， 目前市面上很多设备和传感器都提供MODBUS-RTU的协议支持。 
+Modbus 一个工业上常用的通讯协议, 其中MODBUS-RTU/MODBUS-ASCII在支持串口的设备中最为常用， 目前市面上很多设备和传感器都提供MODBUS-RTU/MODBUS-ASCII的协议支持。 
 
-TiGW1000提供了相应的MODBUS RTU组件方便用户在代码中直接访问MODBUS RTU设备。
+TiGW200提供了相应的MODBUS 组件方便用户在代码中直接访问MODBUS RTU和MODBUS ASCII设备, 在初始化时可根据RTU或ASCII协议创建相应的对象ModbusRTU/ModbusASCII.
+
+
 
 ### 主要接口
 
 | 函数                                                         | 说明                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ModbusClient(TiSerialPort serialPort,  int timeout)          | 初始化，serialPort:  串口通讯对象， timeout: RS485设备通讯超时时间 |
+| ModbusRTU(TiSerialPort serialPort,  int timeout)             | ModbusRTU初始化构造函数，serialPort:  串口通讯对象， timeout: RS485设备通讯超时时间 |
+| ModbusASCII(TiSerialPort serialPort,  int timeout)           | ModbusASCII初始化构造函数，serialPort:  串口通讯对象， timeout: RS485设备通讯超时时间 |
 | **初始化寄存器请求**                                         | 根据参数构造MODBUS寄存器请求                                 |
 | initReadCoilsRequest(int deviceId, int startAddress, int count) | 初始化Read Coils 请求, MODBUS功能码 0x01                     |
 | initWriteCoilRequest(int deviceId, int coilAddress, boolean value) | 初始化WRITE COIL register 请求- 单寄存器操作， MODBUS功能码 0x05 |
@@ -215,7 +218,7 @@ TiGW1000提供了相应的MODBUS RTU组件方便用户在代码中直接访问MO
 
 MODBUS 组件的调用过程一般为：
 
-1. 指定串口实例化MODBUS对象，ModbusClient(TiSerialPort serialPort,  int timeout)
+1. 指定串口实例化MODBUS对象，如果是MODBUS RTU协议设备：ModbusRTU(TiSerialPort serialPort,  int timeout)， 如果是MODBUS ASCII设备：ModbusASCII(TiSerialPort serialPort,  int timeout)
 
 2. 初始化MODBUS寄存器读写操作请求， initXXXRequest 
 
@@ -277,7 +280,7 @@ MODBUS 组件的调用过程一般为：
   ```java
    //MODBUS 客户端  
    //通讯超时2000 ms 
-   ModbusClient modbusRtu = new ModbusClient(rs485, 2000);
+   ModbusRTU modbusRtu = new ModbusRTU(rs485, 2000);
   ```
 
 3. 通过MODBUS协议读取寄存器数据 

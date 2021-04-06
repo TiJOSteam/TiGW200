@@ -44,7 +44,8 @@ public class modbusSample {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 	/**
 	 * 通过RS485基于MODBUS协议读取设备数据
 	 *

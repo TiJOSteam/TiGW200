@@ -118,11 +118,7 @@ public class MqttClientDemo {
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
-            try {
-                mqttClient.disconnect();// release resource
-            } catch (IOException ex) {
-                /* ignore */
-            }
+           mqttClient.disconnect();// release resource
         }
     }
 }
