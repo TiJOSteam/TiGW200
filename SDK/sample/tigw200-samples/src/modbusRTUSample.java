@@ -11,7 +11,7 @@ import tijos.framework.util.Delay;
  * @author TiJOS
  *
  */
-public class modbusSample {
+public class modbusRTUSample {
 	public static void main(String[] args) {
 
 		try {
