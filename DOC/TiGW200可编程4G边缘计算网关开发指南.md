@@ -391,6 +391,14 @@ TiJOS JDK与标准Java JDK兼容，本目录下列出了一些基于标准java�
 | Alibaba               | 阿里云物联网平台例程                     |
 | Tencent               | 腾讯云物联网平台例程                     |
 
+
+
+## 应用远程升级OTA
+
+钛极OS(TiJOS)提供了基于HTTP的远程OTA应用升级方案及源码，方便用户快速在代码中加入远程升级支持， 具体可参考https://github.com/TiJOSteam/tijos-http-ota
+
+
+
 ## 关于Exception
 
 Exception是JAVA语言的最常用的错误处理方式， 为了适用低资源设备，钛极OS在编译过程中会将类、方法名称简化为ID，在打印Exception时只能看到相关的ID， 如果需要查看ID与相应的类名称的对应关系， 可通过在导出TAPK的来查看，此时在Eclipse的编译输出中可以看到所有的类及方法对应的ID，从而方便快速查错。 
