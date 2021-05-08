@@ -1,6 +1,7 @@
+package tigw260;
 import java.io.IOException;
 
-import tigateway.TiGW200;
+import tigateway.TiGW260;
 import tijos.framework.platform.lte.TiLTE;
 import tijos.framework.platform.lte.TiLTECell;
 import tijos.framework.platform.network.NetworkException;
@@ -17,8 +18,8 @@ public class LTENetworkSample {
 
 	public static void main(String[] args)  {
 
-		// 获取TiGW200对象并启动看门狗
-		TiGW200 gw200 = TiGW200.getInstance();
+		// 获取TiGW2XX对象并启动看门狗
+		TiGW260 gw260 = TiGW260.getInstance();
 
 		// 启动4G网络,30秒超时, startup执行完成即连接成功，如果连接失败将通过IOException抛出异常
 		// 网络事件通过事件通知
@@ -39,7 +40,7 @@ public class LTENetworkSample {
 		}
 
 		// 注网成功 蓝灯亮
-		gw200.blueLED().turnOn();
+		gw260.blueLED().turnOn();
 
 		try {
 			// 4G设备唯一ID
@@ -67,7 +68,7 @@ public class LTENetworkSample {
 		}
 
 		// 注网成功 蓝灯亮
-		gw200.blueLED().turnOff();
+		gw260.blueLED().turnOff();
 
 		Delay.msDelay(10000);
 

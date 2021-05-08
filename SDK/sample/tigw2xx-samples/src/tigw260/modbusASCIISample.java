@@ -1,6 +1,8 @@
+package tigw260;
 import java.io.IOException;
 
-import tigateway.TiGW200;
+import tigateway.TiGW260;
+import tigateway.modbus.ascii.ModbusASCII;
 import tigateway.modbus.rtu.ModbusRTU;
 import tigateway.serialport.TiSerialPort;
 import tijos.framework.devicecenter.TiUART;
@@ -11,31 +13,31 @@ import tijos.framework.util.Delay;
  * @author TiJOS
  *
  */
-public class modbusRTUSample {
+public class modbusASCIISample {
 	public static void main(String[] args) {
 
 		try {
 			System.out.println("This is a modbus rtu sample.");
 
 			// 获取TiGW200对象并启动看门狗
-			TiGW200 gw200 = TiGW200.getInstance();
+			TiGW260 gw260 = TiGW260.getInstance();
+
+			//如果MODBUS设备使用vout电源输出需要写打开电源
+			gw260.vout().turnOn();
 
 			// 获取第0路RS485 9600 8 1 N
-			TiSerialPort rs485 = gw200.getRS485(9600,8,1,TiUART.PARITY_NONE);
+			TiSerialPort rs485 = gw260.getRS485(9600,8,1,TiUART.PARITY_NONE);
 
-//			// 获取第1路RS485 9600 8 1 N
-//			TiSerialPort rs485 = gw200.getRS485ById(1,9600,8,1,TiUART.PARITY_NONE);
-
-			// MODBUS RTU
+			// MODBUS ASCII
 			// 通讯超时500 ms
-			ModbusRTU modbusRtu = new ModbusRTU(rs485, 500);
+			ModbusASCII modbusAsc = new ModbusASCII(rs485, 500);
 
 			// MODBUS 数据处理
 			// 每5秒进行一次数据处理同时绿灯亮一次
 			while (true) {
-				gw200.greenLED().turnOn();
-				MonitorProcess(modbusRtu);
-				gw200.blueLED().turnOff();
+				gw260.greenLED().turnOn();
+				MonitorProcess(modbusAsc);
+				gw260.blueLED().turnOff();
 				Delay.msDelay(2000);
 			}
 
@@ -51,7 +53,7 @@ public class modbusRTUSample {
 	 *
 	 * @param modbusRtu
 	 */
-	public static void MonitorProcess(ModbusRTU modbusRtu) {
+	public static void MonitorProcess(ModbusASCII modbusAsc) {
 		try {
 			// MODBUS device id 设备地址
 			int deviceId = 1;
@@ -62,20 +64,20 @@ public class modbusRTUSample {
 			int count = 2;
 
 			// 读取Holding Register
-			modbusRtu.initReadHoldingsRequest(deviceId, startAddr, count);
+			modbusAsc.initReadHoldingsRequest(deviceId, startAddr, count);
 
 			// 下发并获取响应
-			int result = modbusRtu.execRequest();
+			int result = modbusAsc.execRequest();
 
 			// 成功
 			if (result == ModbusRTU.RESULT_OK) {
 
-				int humdity = modbusRtu.getResponseInt16(startAddr, false);
-				int temperature = modbusRtu.getResponseInt16(startAddr + 1, false);
+				int humdity = modbusAsc.getResponseInt16(startAddr, false);
+				int temperature = modbusAsc.getResponseInt16(startAddr + 1, false);
 
 				System.out.println("temp = " + temperature + " humdity = " + humdity);
 			} else {
-				System.out.println("Modbus error " + modbusRtu.getResultAsString());
+				System.out.println("Modbus error " + modbusAsc.getResultAsString());
 			}
 
 		} catch (Exception ex) {

@@ -1,4 +1,6 @@
+package tigw260;
 
+import tijos.framework.platform.TiPower;
 import tijos.framework.platform.lte.TiLTE;
 import java.io.IOException;
 
@@ -21,6 +23,8 @@ import tijos.framework.util.logging.Logger;
 
 class MqttClientMessage implements  IMqttMessageListener
 {
+	int connectError = 0;
+	
 	@Override
 	public void onNetworkConnected(boolean isReconnect) {
 		// TODO Auto-generated method stub
@@ -29,12 +33,21 @@ class MqttClientMessage implements  IMqttMessageListener
 	
 	@Override
 	public void onNetworkDisconnected(int err) {
-		System.out.println("onNetworkDisconnected " + err);	
+		System.out.println("onNetworkDisconnected " + err);
+		
+		connectError++;
+		
+		//连续3次网络连接失败自动重启设备
+		if(connectError > 2) {
+			TiPower.getInstance().reboot(0);
+		}
 	}
 
 	@Override
 	public void onMqttConnected() {
-		System.out.println("onMqttConnected");		
+		System.out.println("onMqttConnected");
+		
+		connectError = 0;
 	}
 
 	@Override

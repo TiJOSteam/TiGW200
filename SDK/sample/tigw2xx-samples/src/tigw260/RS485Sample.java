@@ -1,6 +1,7 @@
+package tigw260;
 import java.io.IOException;
 
-import tigateway.TiGW200;
+import tigateway.TiGW260;
 import tigateway.serialport.TiSerialPort;
 import tijos.framework.devicecenter.TiUART;
 import tijos.framework.util.Delay;
@@ -11,14 +12,11 @@ public class RS485Sample {
 	public static void main(String[] args) {
 
 		try {
-			// 获取TiGW200对象并启动看门狗
-			TiGW200 gw200 = TiGW200.getInstance();
+			// 获取TiGW2xx对象并启动看门狗
+			TiGW260 gw260 = TiGW260.getInstance();
 
 			// 获取第0路RS485 9600 8 1 N
-			TiSerialPort rs485 = gw200.getRS485(9600, 8, 1, TiUART.PARITY_NONE);
-
-//		// 获取第1路RS485 9600 8 1 N
-//		TiSerialPort rs485 = gw200.getRS485ById(1,9600,8,1,TiUART.PARITY_NONE);
+			TiSerialPort rs485 = gw260.getRS485(9600, 8, 1, TiUART.PARITY_NONE);
 
 			byte[] outputHex = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
 			String outputString = "this is a text";

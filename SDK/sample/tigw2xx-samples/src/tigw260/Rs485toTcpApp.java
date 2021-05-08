@@ -1,9 +1,10 @@
+package tigw260;
 
 import java.io.IOException;
 
 import java.net.Socket;
 
-import tigateway.TiGW200;
+import tigateway.TiGW260;
 import tigateway.serialport.TiSerialPort;
 import tijos.framework.devicecenter.TiUART;
 import tijos.framework.platform.lte.TiLTE;
@@ -161,11 +162,11 @@ public class Rs485toTcpApp extends Thread {
 		try {
 			// 启动LTE网络
 			TiLTE.getInstance().startup(20);
-			// 获取TiGW200对象并启动看门狗
-			TiGW200 gw200 = TiGW200.getInstance();
+			// 获取TiGW2xx对象并启动看门狗
+			TiGW260 gw260 = TiGW260.getInstance();
 
 			// 获取第0路RS485 9600 8 1 N
-			TiSerialPort rs485 = gw200.getRS485(9600, 8, 1, TiUART.PARITY_NONE);
+			TiSerialPort rs485 = gw260.getRS485(9600, 8, 1, TiUART.PARITY_NONE);
 			Rs485toTcpApp rs485tcp = new Rs485toTcpApp(host, port, rs485);
 
 			// 连接服务器
