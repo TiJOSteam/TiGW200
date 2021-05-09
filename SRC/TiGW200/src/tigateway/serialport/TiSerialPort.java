@@ -115,10 +115,6 @@ public class TiSerialPort {
 	 */
 	public byte[] read(int msec) throws IOException {
 
-		int avail = this.uart.available();
-		if (avail <= 0)
-			return null;
-
 		byte[] buffer = new byte[512];
 
 		int num = 0;
@@ -128,11 +124,20 @@ public class TiSerialPort {
 		long start = System.currentTimeMillis();
 		while (System.currentTimeMillis() - start < msec) {
 			int len = this.uart.read(buffer, num, left);
+			if (len <= 0) {
+				Delay.msDelay(50);
+				continue;
+			}
+			
 			num += len;
 			left -= len;
 
 			if (left == 0)
-				break;
+				break;	
+		}
+		
+		if(num == 0) {
+			return null;
 		}
 
 		byte[] newBuff = new byte[num];

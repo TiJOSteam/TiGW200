@@ -1,9 +1,7 @@
 package tigateway.modbus.ascii;
 
-import static tigateway.modbus.protocol.ModbusConstants.MAX_PDU_SIZE;
 
 import tigateway.modbus.Modbus;
-import tigateway.modbus.protocol.ModbusCrc16;
 import tigateway.modbus.protocol.ModbusLRC;
 import tigateway.modbus.protocol.ModbusPdu;
 import tigateway.modbus.transport.IMBTransport;
@@ -41,6 +39,9 @@ public class AscIITransportUART implements IMBTransport {
 	 */
 	@Override
 	public void sendRequest(Modbus modbusClient) throws Exception {
+
+		//clear buffer before new request 
+		this.serialPort.clearInput();
 
 		byte[] buffer = new byte[modbusClient.getPduSize() + 16]; // ADU: [ID(1), PDU(n), LRC(2)]
 

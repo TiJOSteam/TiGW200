@@ -34,6 +34,9 @@ public class RtuTransportUART implements IMBTransport {
 	@Override
 	public void sendRequest(Modbus modbusClient) throws Exception {
 
+		//clear buffer before new request 
+		this.serialPort.clearInput();
+
 		byte[] buffer = new byte[modbusClient.getPduSize() + 16]; // ADU: [ID(1), PDU(n), CRC(2)]
 
 		buffer[0] = modbusClient.getDeviceId();
