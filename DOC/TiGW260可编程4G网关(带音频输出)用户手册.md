@@ -2,19 +2,19 @@
 
 ## 产品介绍
 
-TiGW260是钛云物联开发的支持4G Cat1网络的可编程支持音频输出网关,它提供1路RS485，1路音频输出，1路可控开关电源，支持TTS(Text to Speech), 可通过目前的运营商4G网络将数据上报至云端,满足用户对设备的接入需求, 能够支持目前主流的网络接入协议和公有云平台，包括MQTT, COAP, LWM2M以及阿里云、腾讯云、中国移动ONENET、中国电信AEP等等。
+TiGW260是钛云物联开发的支持4G Cat1网络的可编程支持音频输出网关,它提供1路RS485，1路音频输出，1路可控开关电源，支持音频输出，支持TTS(Text to Speech), 可通过目前的运营商4G网络将数据上报至云端,满足用户对设备的接入需求, 能够支持目前主流的网络接入协议和公有云平台，包括MQTT, COAP, LWM2M以及阿里云、腾讯云、中国移动ONENET、中国电信AEP等等。
 
 TiGW260内置钛云物联自主知识产权的钛极OS(TiJOS)物联网操作系统，支持用户通过Java语言进行功能扩展，适用各种工况， 它强大的可编程功能允许用户根据项目需求通过Java语言开发相关所需的功能， 如串口通讯， 协议解析，上传云端等等。
 
 TiGW260提供了丰富的文档和例程，并提供了大量开源驱动，如MODBUS等，方便用户可以快速的完成所需功能。
 
-![1538222485990](./img/1538222485990.png) 
+![1538222485990](./img/tigw260.png) 
 
 ### 产品特点
 
 - 支持4G LTE网络，支持中国移动， 中国电信， 中国联通全网通频段
 - 支持1路RS485工业总线接入现场设备 
-- 提供1路Vout可控电源输出
+- 提供1路Vout可控电源输出，可用于控制开关型声光报警器
 - 提供1路音频输出，支持TTS语音输出
 - 内置TiJVM Java虚拟机
 - 支持用户进行功能扩展
@@ -27,32 +27,36 @@ TiGW260提供了丰富的文档和例程，并提供了大量开源驱动，如M
 
 ## 产品规格
 
-| 参数             | 说明                              |
-| ---------------- | --------------------------------- |
-| 产品名称         | 4G可编程音频网关                  |
-| 产品型号         | TiGW260                           |
-| 工作电压         | 9-28V                             |
-| 供电方式         | 直流电源                          |
-| 无线传输方式     | 4G Cat1                           |
-| 有线传输方式     | 1路RS485, 最大支持32个设备连接    |
-| 音频输出         | 1路音频输出端子                   |
-| 最大应用支持个数 | 32                                |
-| 串口波特率       | 2400~115200bps                    |
-| 编程端口         | USB                               |
-| 频段(MHz)        | 全网通                            |
-| SIM卡规格        | 标准SIM卡                         |
-| 通信天线         | SMA天线接口                       |
-| 外形尺寸         | 长82mm 宽62mm 高20mm (不含天线)   |
-| 工作温度         | -35°C ~ +75°C                     |
-| 工作湿度         | 5%~95%(无凝露)                    |
-| 外壳材料         | 金属                              |
-| 配件             | 12V电源(1A)，USB数据线， 胶棒天线 |
+| 参数             | 说明                                           |
+| ---------------- | ---------------------------------------------- |
+| 产品名称         | 4G可编程音频网关                               |
+| 产品型号         | TiGW260                                        |
+| 工作电压         | 9-28V                                          |
+| 供电方式         | 直流电源                                       |
+| 无线传输方式     | 4G Cat1                                        |
+| 有线传输方式     | 1路RS485, 最大支持32个设备连接                 |
+| 音频输出         | 1路音频输出端子(驱动能力：1.5W,8欧姆)，支持TTS |
+| 电源输出         | 可控电源输出，与电源输入相同，默认关闭         |
+| 最大应用支持个数 | 32                                             |
+| 串口波特率       | 2400~115200bps                                 |
+| 编程端口         | USB                                            |
+| 频段(MHz)        | 全网通                                         |
+| SIM卡规格        | 标准SIM卡                                      |
+| 通信天线         | SMA天线接口                                    |
+| 外形尺寸         | 长82mm 宽62mm 高20mm (不含天线)                |
+| 工作温度         | -35°C ~ +75°C                                  |
+| 工作湿度         | 5%~95%(无凝露)                                 |
+| 外壳材料         | 金属                                           |
+| 配件             | 12V电源(1A)，USB数据线， 胶棒天线              |
 
 
 
 ## 接口说明
 
-![image-20210113155607018](.\img\image-20210113155607018.png)
+![image-20210113155607018](./img/tigw260-output2.png)
+
+![image-20210113155607018](./img/tigw260-output.png)
+
 
 ### 有线数据接口
 
@@ -64,9 +68,9 @@ TiGW260提供了丰富的文档和例程，并提供了大量开源驱动，如M
 
 提供1路音频输出，可连接外置扬声器
 
-#### 可控直流电源输出
+#### 输出电源(可控直流)
 
-提供了一路电源输出接口，规格与输入电源相关， 可用于连接外部传感器设备或连接开关报警器， 该电源默认关闭，使用时根据需要在代码中打开或关闭。
+提供了一路电源输出接口，规格与输入电源相关， 可用于连接外部传感器设备或连接开关报警器， 该电源默认关闭，使用时根据需要在代码中打开或关闭，可用于控制开关型声光报警器或RS485设备电源输入
 
 #### USB编程口
 
@@ -166,10 +170,12 @@ SMA接口天线底座， 请使用SMA内螺内针4G天线。
 
 | **名称**               | **资料链接地址**                                             | **说明**                                |
 | ---------------------- | ------------------------------------------------------------ | --------------------------------------- |
-| TiGW200  SDK           | https://github.com/TiJOSteam/TiGW200/tree/main/SDK      | 包含开发指南、硬件访问API、基础例程等等 |
+| TiGW200  SDK           | https://github.com/TiJOSteam/TiGW200/tree/main/SDK           | 包含开发指南、硬件访问API、基础例程等等 |
 | Eclipse开发环境搭建    | http://doc.tijos.net/docstore/tijos-development-course/step1-enviornment_setup/about_tistudio/ | 基于Eclipse的开发环境搭建流程           |
 | 钛极OS文档中心         | http://doc.tijos.net/docstore/                               | 钛极OS开发文档及例程                    |
-| MODBUS例程             | https://github.com/TiJOSteam/TiGW200-Cat1/tree/main/SDK/sample/modbus-rtu | Modbus  及RS485例程                     |
+| MODBUS例程             | https://github.com/TiJOSteam/TiGW200/tree/main/SDK/sample/tigw2xx-samples/modbus-rtu | Modbus  及RS485例程                     |
+| Text to Speech 例程    | https://github.com/TiJOSteam/TiGW200/tree/main/SDK/sample/tigw2xx-samples/tigw260/Text2SpeechSample.java | TTS音频输出例程                         |
+| 可控电源输出例程       | https://github.com/TiJOSteam/TiGW200/tree/main/SDK/sample/tigw2xx-samples/tigw260/VoutSample.java | 可控电源输出控制                        |
 | MQTT等基本例程         | https://github.com/TiJOSteam/tijos-software-example          | 标准MQTT接入例程                        |
 | 阿里云接入例程         | https://github.com/TiJOSApp/tijos-mqtt-aliyun-iot            | 阿里云IoT平台接入例程                   |
 | 腾讯云接入例程         | https://github.com/TiJOSApp/tijos-tencent-iot-explore        | 腾讯云IoT平台接入例程                   |
