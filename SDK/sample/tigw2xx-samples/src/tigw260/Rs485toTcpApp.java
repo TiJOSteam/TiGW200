@@ -38,6 +38,10 @@ public class Rs485toTcpApp extends Thread {
 	public void run() {
 
 		while (true) {
+			if(this.client == null) {
+				this.connect();
+			}
+
 			tcp2rs485();
 			Delay.msDelay(200);
 		}
