@@ -711,66 +711,66 @@ public class TiDLT645_2007 {
 		return reply;
 	}
 
-	public static void main(String[] args) throws IOException {
-		System.out.println("Hello World!");
-
-		int[] All_Meter_Data = new int[] { TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER,
-				TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER, TiDLT645_2007.DLT645_TAG_INSTANT_ACTIVE_POWER,
-				TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_A, TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_B,
-				TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_C, TiDLT645_2007.DLT645_TAG_GRID_PHASE_CURRENT_A,
-				TiDLT645_2007.DLT645_TAG_GRID_PHASE_CURRENT_B, TiDLT645_2007.DLT645_TAG_GRID_PHASE_CURRENT_C,
-				TiDLT645_2007.DLT645_TAG_GRID_PHASE_POWER_A, TiDLT645_2007.DLT645_TAG_GRID_PHASE_POWER_B,
-				TiDLT645_2007.DLT645_TAG_GRID_PHASE_POWER_C, TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_1,
-				TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_2, TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_3,
-				TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_4, TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_1,
-				TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_2, TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_3,
-				TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_4 };
-
-		TiSerialPort serialPort = TiGW200.getInstance().getRS485(2400, 8, 1, 2);
-		TiDLT645_2007 dlt645 = new TiDLT645_2007(serialPort);
-
-//		String factory = "68aaaaaaaaaaaa681F03428832EA16";
-//		byte[] result = dlt645.transmit(Formatter.hexStringToByte(factory));
+//	public static void main(String[] args) throws IOException {
+//		System.out.println("Hello World!");
 //
-//		System.out.println("result " + Formatter.toHexString(result));
-
-		byte[] address = dlt645.readMeterAddress();
-		System.out.println("address " + Formatter.toHexString(address));
-		
-		dlt645.setMeterAddress(address);
-		
-
-//		byte[] password = new byte[] { 0, 0, 0, 2 };
-//		byte[] operator = new byte[] { (byte) 0x00, (byte) 00, (byte) 00, (byte) 0x12 };
+//		int[] All_Meter_Data = new int[] { TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER,
+//				TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER, TiDLT645_2007.DLT645_TAG_INSTANT_ACTIVE_POWER,
+//				TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_A, TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_B,
+//				TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_C, TiDLT645_2007.DLT645_TAG_GRID_PHASE_CURRENT_A,
+//				TiDLT645_2007.DLT645_TAG_GRID_PHASE_CURRENT_B, TiDLT645_2007.DLT645_TAG_GRID_PHASE_CURRENT_C,
+//				TiDLT645_2007.DLT645_TAG_GRID_PHASE_POWER_A, TiDLT645_2007.DLT645_TAG_GRID_PHASE_POWER_B,
+//				TiDLT645_2007.DLT645_TAG_GRID_PHASE_POWER_C, TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_1,
+//				TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_2, TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_3,
+//				TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER_4, TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_1,
+//				TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_2, TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_3,
+//				TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER_4 };
 //
-//		dlt645.meterSwitchCommand(0x1c, password, operator);
-
-		int tag = 0;
-
-		tag = TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_A;
-		double reading = MeterReading_Get(dlt645, tag);
-		System.out.println("tag: " + 0 + " reading: " + reading);
+//		TiSerialPort serialPort = TiGW200.getInstance().getRS485(2400, 8, 1, 2);
+//		TiDLT645_2007 dlt645 = new TiDLT645_2007(serialPort);
 //
-		byte[] meterData = dlt645.readMeterData(TiDLT645_2007.DLT645_TAG_STATUS_ACTIVE_POWER_1); // read meter data
-		System.out.println(Formatter.toHexString(meterData));
-
-		meterData = dlt645.readMeterData(TiDLT645_2007.DLT645_TAG_STATUS_ACTIVE_POWER_3); // read meter data
-		System.out.println(Formatter.toHexString(meterData));
-
-		meterData = dlt645.readMeterData(TiDLT645_2007.DLT645_TAG_STATUS_ACTIVE_POWER_4); // read meter data
-		System.out.println(Formatter.toHexString(meterData));
-
-		for (int rtag : All_Meter_Data) {
-			reading = MeterReading_Get(dlt645, rtag);
-			System.out.println("tag: " + rtag + " reading: " + reading);
-		}
-	}
-
-	static double MeterReading_Get(TiDLT645_2007 dlt645, int meterdata) throws IOException {
-		byte[] meterData = dlt645.readMeterData(meterdata); // read meter data
-
-		double reading = Helper.BCD2Double(meterData, 2);
-		return reading;
-	}
+////		String factory = "68aaaaaaaaaaaa681F03428832EA16";
+////		byte[] result = dlt645.transmit(Formatter.hexStringToByte(factory));
+////
+////		System.out.println("result " + Formatter.toHexString(result));
+//
+//		byte[] address = dlt645.readMeterAddress();
+//		System.out.println("address " + Formatter.toHexString(address));
+//		
+//		dlt645.setMeterAddress(address);
+//		
+//
+////		byte[] password = new byte[] { 0, 0, 0, 2 };
+////		byte[] operator = new byte[] { (byte) 0x00, (byte) 00, (byte) 00, (byte) 0x12 };
+////
+////		dlt645.meterSwitchCommand(0x1c, password, operator);
+//
+//		int tag = 0;
+//
+//		tag = TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_A;
+//		double reading = MeterReading_Get(dlt645, tag);
+//		System.out.println("tag: " + 0 + " reading: " + reading);
+////
+//		byte[] meterData = dlt645.readMeterData(TiDLT645_2007.DLT645_TAG_STATUS_ACTIVE_POWER_1); // read meter data
+//		System.out.println(Formatter.toHexString(meterData));
+//
+//		meterData = dlt645.readMeterData(TiDLT645_2007.DLT645_TAG_STATUS_ACTIVE_POWER_3); // read meter data
+//		System.out.println(Formatter.toHexString(meterData));
+//
+//		meterData = dlt645.readMeterData(TiDLT645_2007.DLT645_TAG_STATUS_ACTIVE_POWER_4); // read meter data
+//		System.out.println(Formatter.toHexString(meterData));
+//
+//		for (int rtag : All_Meter_Data) {
+//			reading = MeterReading_Get(dlt645, rtag);
+//			System.out.println("tag: " + rtag + " reading: " + reading);
+//		}
+//	}
+//
+//	static double MeterReading_Get(TiDLT645_2007 dlt645, int meterdata) throws IOException {
+//		byte[] meterData = dlt645.readMeterData(meterdata); // read meter data
+//
+//		double reading = Helper.BCD2Double(meterData, 2);
+//		return reading;
+//	}
 
 }
