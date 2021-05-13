@@ -146,13 +146,13 @@ TiGW260提供了一路音频输出，用于外接扬声器，驱动能力1.5W, 8
 
 通过getRS485获取串口后，即可对串口进行读写操作
 
-| 方法                                                         | 说明                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| void write(byte [] buffer ,int start ,int length)            | 写入数据到串口 buffer: 待写入数据  start  缓存区开始位置 length 写入长度 |
-| boolean readToBuffer(byte[] buffer, int start, int length, int timeOut) | 从串口读取指定长度数据  buffer: 读入数据缓存区，start 缓存区开始位置 ，length 读取长度 ， timeOut超时，单位毫秒 |
-| byte [] read(int msec)                                       | 从串口读数据, msec 最大毫秒数， 当有数据时从串口指定时间的数据返回， 如果没有数据则返回null |
-| byte[] read()                                                | 从串口读数据, 有数据时立即返回读取到的数据，否则返回null     |
-| void clearInput()                                            | 清除输入缓存区                                               |
+| 方法                                                        | 说明                                                         |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| void write(byte [] buffer ,int start ,int length)           | 写入数据到串口 buffer: 待写入数据  start  缓存区开始位置 length 写入长度 |
+| int read(byte[] buffer, int start, int length, int timeOut) | 从串口读取指定长度数据,返回实际长度  buffer: 读入数据缓存区，start 缓存区开始位置 ，length 读取长度 ， timeOut超时，单位毫秒 |
+| byte [] read(int msec)                                      | 从串口读数据, msec 最大毫秒数， 当有数据时从串口指定时间的数据返回， 如果没有数据则返回null |
+| byte[] read()                                               | 从串口读数据, 有数据时立即返回读取到的数据，否则返回null     |
+| void clearInput()                                           | 清除输入缓存区                                               |
 
 
 
