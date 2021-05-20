@@ -18,12 +18,26 @@ public class TiGW200 {
 	private TiLED blueLED = new TiLED(0);
 	private TiLED greenLED = new TiLED(1);
 
-	private WatchDog wdt = new WatchDog();
-
+	private boolean isGW210 = false;
 	private static TiGW200 instance;
 
 	private TiGW200() {
-		wdt.init();
+
+		try {
+			isGW210 = false;
+			String oemInfo = System.getProperty("hardware.oem");
+			if (oemInfo.equals("tigw210")) {
+				isGW210 = true;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		// WDT is built in for gw210
+		if (!isGW210) {
+			WatchDog wdt = new WatchDog();
+			wdt.init();
+		}
 	}
 
 	public static TiGW200 getInstance() {
@@ -51,7 +65,7 @@ public class TiGW200 {
 	/**
 	 * 获取指定通道RS485端口, 多通道485时请使用此接口
 	 * 
-	 * @param id        通道 0或通道 1
+	 * @param id         通道 0或通道 1
 	 * @param baudRate   波特率
 	 * @param dataBitNum 数据位
 	 * @param stopBitNum 停止位
@@ -66,13 +80,20 @@ public class TiGW200 {
 		}
 
 		if (rs485chn[id] == null) {
-			int uartId = 4;
-			if (id == 1) {
-				uartId = 5;
-			}
+			int uartId = getUartId(id);
 
 			TiSerialPort rs485 = new TiSerialPort(uartId);
 			rs485.open(baudRate, dataBitNum, stopBitNum, parity);
+			
+			if(this.isGW210) {
+				if(id == 0) {
+					rs485.setRS485DuplexLine(0, 10);
+				}else 
+				{
+					rs485.setRS485DuplexLine(0, 12);
+				}
+			}
+			
 			rs485chn[id] = rs485;
 		}
 
@@ -97,4 +118,26 @@ public class TiGW200 {
 		return greenLED;
 	}
 
+	/**
+	 * uart id: tigw200 : 4 and 5 , tigw210 : 1 and 3
+	 * @param chn
+	 * @return
+	 */
+	private int getUartId(int chn) {
+		int uartId = 0;
+		if (isGW210) {
+			uartId = 1;
+			if (chn == 1) {
+				uartId = 3;
+			}
+
+		} else {
+			uartId = 4;
+			if (chn == 1) {
+				uartId = 5;
+			}
+
+		}
+		return uartId;
+	}
 }

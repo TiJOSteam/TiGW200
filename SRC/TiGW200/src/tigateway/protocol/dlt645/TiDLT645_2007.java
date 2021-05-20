@@ -136,11 +136,15 @@ public class TiDLT645_2007 {
 	 * @throws IOException
 	 */
 	public void setMeterAddress(byte[] meterAddress) throws IOException {
-		if (meterAddress.length != DLT645_ADDRESS_LEN) {
+		
+		if (meterAddress.length > DLT645_ADDRESS_LEN) {
 			throw new IOException("Invalid address length");
 		}
-
-		System.arraycopy(meterAddress, 0, this.deviceAddress, 0, meterAddress.length);
+		
+		for (int i = 0; i < deviceAddress.length; i++) {
+			deviceAddress[i] = (byte) 0x00;
+		}
+		System.arraycopy(meterAddress, 0, this.deviceAddress, DLT645_ADDRESS_LEN - meterAddress.length, meterAddress.length);			
 
 		Helper.reverseBytes(this.deviceAddress);
 	}
@@ -713,7 +717,7 @@ public class TiDLT645_2007 {
 
 //	public static void main(String[] args) throws IOException {
 //		System.out.println("Hello World!");
-//
+//	
 //		int[] All_Meter_Data = new int[] { TiDLT645_2007.DLT645_TAG_FORWARD_ACTIVE_POWER,
 //				TiDLT645_2007.DLT645_TAG_BACKWARD_ACTIVE_POWER, TiDLT645_2007.DLT645_TAG_INSTANT_ACTIVE_POWER,
 //				TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_A, TiDLT645_2007.DLT645_TAG_GRID_PHASE_VOLTAGE_B,
@@ -738,6 +742,9 @@ public class TiDLT645_2007 {
 //		System.out.println("address " + Formatter.toHexString(address));
 //		
 //		dlt645.setMeterAddress(address);
+////		dlt645.setMeterAddress(Formatter.hexStringToByte("00510002"));
+//	
+//		System.out.println("dev " + Formatter.toHexString(dlt645.deviceAddress));
 //		
 //
 ////		byte[] password = new byte[] { 0, 0, 0, 2 };
