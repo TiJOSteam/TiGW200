@@ -14,7 +14,7 @@ public class RtuTransportUART implements IMBTransport {
 
 	TiSerialPort serialPort;
 
-	protected final int timeout;
+	protected int timeout;
 
 	/**
 	 * Initialize with UART and timeout
@@ -25,6 +25,15 @@ public class RtuTransportUART implements IMBTransport {
 	public RtuTransportUART(TiSerialPort serialPort, int timeout) {
 		this.serialPort = serialPort;
 
+		this.timeout = timeout;
+	}
+	
+	/**
+	 * Set read timeout for UART
+	 * @param timeout
+	 */
+	@Override
+	public void setCommTimout(int timeout) {
 		this.timeout = timeout;
 	}
 

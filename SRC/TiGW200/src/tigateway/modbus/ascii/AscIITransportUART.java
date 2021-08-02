@@ -19,7 +19,7 @@ public class AscIITransportUART implements IMBTransport {
 	private static final byte START = ':';
 	private static final byte[] END = { '\r', '\n' };
 
-	protected final int timeout;
+	protected int timeout;
 	protected int expectedBytes; // for logging
 
 	/**
@@ -33,6 +33,16 @@ public class AscIITransportUART implements IMBTransport {
 
 		this.timeout = timeout;
 	}
+	
+	/**
+	 * Set read timeout for UART
+	 * @param timeout
+	 */
+	@Override
+	public void setCommTimout(int timeout) {
+		this.timeout = timeout;
+	}
+
 
 	/**
 	 * Send MODBUS request

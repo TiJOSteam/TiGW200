@@ -63,6 +63,10 @@ public class TiSerialPort {
 		this.uart.close();
 	}
 
+	public TiUART getUart() {
+		return this.uart;
+	}
+	
 	/**
 	 * Clear UART buffer
 	 *
@@ -71,6 +75,16 @@ public class TiSerialPort {
 	public void clearInput() throws IOException {
 
 		this.uart.clear(TiUART.BUFF_READ);
+	}
+	
+
+	/**
+	 * Available 
+	 * @return
+	 * @throws IOException
+	 */
+	public int available() throws IOException {
+		return this.uart.available();
 	}
 
 	/**

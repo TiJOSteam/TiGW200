@@ -55,6 +55,13 @@ public class Modbus extends ModbusPdu {
 	}
 
 	/**
+	 * set read timeout of the rs485
+	 * @param timeout
+	 */
+	public void setCommTimeout(int timeout) {
+		this.transport.setCommTimout(timeout);
+	}
+	/**
 	 * Get device id
 	 *
 	 * @return

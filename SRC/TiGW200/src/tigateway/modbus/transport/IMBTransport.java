@@ -15,5 +15,6 @@ public interface IMBTransport {
 	int waitResponse(Modbus mb) throws Exception;
 	
 	
+	void setCommTimout(int timeout);
 
 }
