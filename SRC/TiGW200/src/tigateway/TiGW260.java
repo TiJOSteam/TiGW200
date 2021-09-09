@@ -59,6 +59,20 @@ public class TiGW260 {
 	}
 
 	/**
+	 * 获取串口通道 
+	 * @param id  0 - RS485
+	 * @param baudRate
+	 * @param dataBitNum
+	 * @param stopBitNum
+	 * @param parity
+	 * @return
+	 * @throws IOException
+	 */
+	public TiSerialPort getSerialPort(int id, int baudRate, int dataBitNum, int stopBitNum, int parity)	throws IOException {
+		return this.getRS485(baudRate, dataBitNum, stopBitNum, parity);
+	}
+
+	/**
 	 * 蓝色灯
 	 * 
 	 * @return

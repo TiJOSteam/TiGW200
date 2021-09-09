@@ -99,6 +99,21 @@ public class TiGW200 {
 
 		return rs485chn[id];
 	}
+	
+	/**
+	 * 获取串口通道
+	 * @param id  0 RS485-1  1 RS485-2
+	 * @param baudRate
+	 * @param dataBitNum
+	 * @param stopBitNum
+	 * @param parity
+	 * @return
+	 * @throws IOException
+	 */
+	public TiSerialPort getSerialPort(int id, int baudRate, int dataBitNum, int stopBitNum, int parity)	throws IOException {
+		return getRS485ById(id, baudRate, dataBitNum, stopBitNum, parity);
+	}
+
 
 	/**
 	 * 蓝色灯
