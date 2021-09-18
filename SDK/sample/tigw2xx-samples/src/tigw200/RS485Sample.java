@@ -16,7 +16,7 @@ public class RS485Sample {
 			TiGW200 gw200 = TiGW200.getInstance();
 
 			// 获取第0路RS485 9600 8 1 N
-			TiSerialPort rs485 = gw200.getRS485(9600, 8, 1, TiUART.PARITY_NONE);
+			TiSerialPort rs485 = gw200.getRS485(4800, 8, 1, TiUART.PARITY_NONE);
 
 //		// 获取第1路RS485 9600 8 1 N
 //		TiSerialPort rs485 = gw200.getRS485ById(1,9600,8,1,TiUART.PARITY_NONE);
