@@ -6,9 +6,9 @@ TiDeviceManager设备管理器可用于设备及应用下载管理等功能， �
 
 
 
-## TiKVSettings  键值对设置工具
+## TiGWSettings  批量设置工具
 
-钛极OS内部提供的KV键值对存储，方便用户进行保存系统设置， TiKVSetttings提供了设置工具方便用户进行参数预置。 
+TiGWSettings批量设置工具方便用户批量下载应用并设置KV键值对，用于开发完成后设备分发。
 
 
 
