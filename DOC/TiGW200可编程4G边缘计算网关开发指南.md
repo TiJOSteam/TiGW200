@@ -46,9 +46,9 @@ TiGW200是钛云物联基于钛极OS(TiJOS)物联网操作系统开发的4G可�
 
 TiGW200提供了相关例程，用户可直接使用Eclipse打开例程进行修改或者新建一个TiJOS Application工程，具体过程请参考[欢迎来到TiJOS世界—新建工程Hello TiJOS - 文档中心](http://dev.tijos.net/docstore/tijos-development-course2/introductory/LESSON5/hello_tijos/)
 
-TiGW200提供了两个JAR包，TiGW200-2.0.x.jar是依赖库， TiGW200-2.0.x-sources.jar 是对应的源码，方便用在Eclipse中直接查看对应的库中的源码。
+TiGW200提供了两个JAR包，TiGW-2.0.x.jar是依赖库， TiGW-2.0.x-sources.jar 是对应的源码，方便用在Eclipse中直接查看对应的库中的源码。
 
-在新建工程后， 将TiGW200-2.0.x.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，同时可将源码包加到配置中， 如下图所示：
+在新建工程后， 将TiGW-2.0.x.jar加入到工程中， 将在工程属性中将该Jar包加入到Java Build Path中，同时可将源码包加到配置中， 如下图所示：
 
 ![1538273694997](./img/1538273694997.png)
 
@@ -60,7 +60,7 @@ TiGW200提供了两个JAR包，TiGW200-2.0.x.jar是依赖库， TiGW200-2.0.x-so
 
 ![image-20210314094720255](.\img\image-20210314094720255.png)
 
-选择对应的TiGW200-2.0.X-sources.jar包文件即可。 
+选择对应的TiGW-2.0.X-sources.jar包文件即可。 
 
 当需要时， 在工程中双击对应的class文件即可看到对应的源码
 

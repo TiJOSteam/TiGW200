@@ -37,7 +37,7 @@ public class modbusASCIISample {
 			while (true) {
 				gw260.greenLED().turnOn();
 				MonitorProcess(modbusAsc);
-				gw260.blueLED().turnOff();
+				gw260.greenLED().turnOff();
 				Delay.msDelay(2000);
 			}
 

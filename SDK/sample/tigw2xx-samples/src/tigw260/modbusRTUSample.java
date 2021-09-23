@@ -36,7 +36,7 @@ public class modbusRTUSample {
 			while (true) {
 				gw260.greenLED().turnOn();
 				MonitorProcess(modbusRtu);
-				gw260.blueLED().turnOff();
+				gw260.greenLED().turnOff();
 				Delay.msDelay(2000);
 			}
 

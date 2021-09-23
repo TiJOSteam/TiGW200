@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="net.tijos.dev.sdk.TIJOS_FRAMEWORK/TiJOS Runtime Library 3.0"/>
-	<classpathentry kind="lib" path="src/TiGW200-2.0.4.jar" sourcepath="src/TiGW200-2.0.4-sources.jar"/>
+	<classpathentry kind="lib" path="src/TiGW-2.0.5.jar" sourcepath="src/TiGW-2.0.5-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
