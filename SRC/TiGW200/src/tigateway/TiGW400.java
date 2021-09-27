@@ -49,7 +49,7 @@ public class TiGW400 {
 	/**
 	 * 通过串口获取通道
 	 * 
-	 * @param id         0 RS485 1 RS232
+	 * @param id         0 RS485 
 	 * @param baudRate
 	 * @param dataBitNum
 	 * @param stopBitNum
