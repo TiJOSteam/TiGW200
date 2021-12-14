@@ -2,7 +2,6 @@ package tigateway;
 
 import java.io.IOException;
 
-import tigateway.peripheral.TiLED;
 import tigateway.serialport.TiSerialPort;
 import tijos.framework.devicecenter.TiGPIO;
 
@@ -12,14 +11,11 @@ import tijos.framework.devicecenter.TiGPIO;
  * @author lemon
  *
  */
-public class TiGW1000 {
+public class TiGW1000 extends TiGateway {
 
 	private TiSerialPort rs485 = null;
 	private TiSerialPort rs232 = null;
 	private TiSerialPort[] ttl = new TiSerialPort[2];
-
-	private TiLED blueLED = new TiLED(0);
-	private TiLED greenLED = new TiLED(1);
 
 	private TiGPIO[] relay = new TiGPIO[2];
 	private TiGPIO[] digitalOut = new TiGPIO[2];
@@ -110,6 +106,7 @@ public class TiGW1000 {
 	 * @return
 	 * @throws IOException
 	 */
+	@Override
 	public TiSerialPort getSerialPort(int id, int baudRate, int dataBitNum, int stopBitNum, int parity)
 			throws IOException {
 
@@ -128,30 +125,13 @@ public class TiGW1000 {
 	}
 
 	/**
-	 * 蓝色灯
-	 * 
-	 * @return
-	 */
-	public TiLED blueLED() {
-		return blueLED;
-	}
-
-	/**
-	 * 绿色灯
-	 * 
-	 * @return
-	 */
-	public TiLED greenLED() {
-		return greenLED;
-	}
-
-	/**
 	 * 继电器控制 支持2个， id分别为0和1
 	 * 
 	 * @param id  继电器id
 	 * @param ctl 0 : OFF 1 : ON
 	 * @throws IOException
 	 */
+	@Override
 	public void relayControl(int id, int ctl) throws IOException {
 		if (id < 0 || id > 1) {
 			throw new IOException("unsuported id");
@@ -174,6 +154,7 @@ public class TiGW1000 {
 	 * @param ctl 0:OFF 1:ON
 	 * @throws IOException
 	 */
+	@Override
 	public void digitalOutput(int id, int ctl) throws IOException {
 
 		if (id < 0 || id > 1) {
@@ -197,6 +178,7 @@ public class TiGW1000 {
 	 * @return 0:OFF 1:ON
 	 * @throws IOException
 	 */
+	@Override
 	public int digitalInput(int id) throws IOException {
 		if (id < 0 || id > 4) {
 			throw new IOException("unsuported id");

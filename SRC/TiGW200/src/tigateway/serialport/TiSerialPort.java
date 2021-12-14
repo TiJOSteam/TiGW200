@@ -66,7 +66,7 @@ public class TiSerialPort {
 	public TiUART getUart() {
 		return this.uart;
 	}
-	
+
 	/**
 	 * Clear UART buffer
 	 *
@@ -76,10 +76,10 @@ public class TiSerialPort {
 
 		this.uart.clear(TiUART.BUFF_READ);
 	}
-	
 
 	/**
-	 * Available 
+	 * Available
+	 * 
 	 * @return
 	 * @throws IOException
 	 */
@@ -119,16 +119,17 @@ public class TiSerialPort {
 
 		return buffer;
 	}
-	
+
 	/**
 	 * read expected data within timeout
-	 * @param buffer buffer to store data 
+	 * 
+	 * @param buffer  buffer to store data
 	 * @param timeOut timeout in milliseconds
 	 * @return actual received data length
 	 * @throws IOException
 	 */
-	public int read(byte[]buffer, int timeOut) throws IOException {
-		return this.read(buffer, 0, buffer.length,timeOut);
+	public int read(byte[] buffer, int timeOut) throws IOException {
+		return this.read(buffer, 0, buffer.length, timeOut);
 	}
 
 	/**
@@ -143,7 +144,7 @@ public class TiSerialPort {
 	 */
 	public int read(byte[] buffer, int start, int length, int timeOut) throws IOException {
 
-		if(start + length > buffer.length) {
+		if (start + length > buffer.length) {
 			throw new IOException("invalid parameters");
 		}
 
@@ -167,8 +168,7 @@ public class TiSerialPort {
 		}
 		res = length - bytesToRead; // total bytes read
 		if (res < length) {
-			Logger.info("TiSerialPort",
-					"Read timeout(incomplete): " + Formatter.toHexString(buffer, start,  res, ""));
+			Logger.info("TiSerialPort", "Read timeout(incomplete): " + Formatter.toHexString(buffer, start, res, ""));
 		}
 
 		return res;
@@ -251,6 +251,18 @@ public class TiSerialPort {
 			return false;
 		} else
 			return true;
+	}
+
+	/**
+	 * read data into buffer immediately from serial port  
+	 * @param buffer  buffer to store data 
+	 * @param start start offset of buffer 
+	 * @param length  length to read 
+	 * @return  data length from serial port 
+	 * @throws IOException
+	 */
+	public int readToBuffer(byte[] buffer, int start, int length) throws IOException {
+		return this.uart.read(buffer, start, length);
 	}
 
 }

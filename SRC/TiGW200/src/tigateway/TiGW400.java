@@ -2,18 +2,14 @@ package tigateway;
 
 import java.io.IOException;
 
-import tigateway.peripheral.TiLED;
 import tigateway.serialport.TiSerialPort;
 
-public class TiGW400 {
+public class TiGW400 extends TiGateway {
 
 	static final int rs485UartId = 2;
 	static final int rs485DuplexGpio = 10;
 
 	private TiSerialPort rs485 = null;
-
-	private TiLED blueLED = new TiLED(0);
-	private TiLED greenLED = new TiLED(1);
 
 	private static TiGW400 instance;
 
@@ -57,26 +53,8 @@ public class TiGW400 {
 	 * @return
 	 * @throws IOException
 	 */
+	@Override
 	public TiSerialPort getSerialPort(int id, int baudRate, int dataBitNum, int stopBitNum, int parity)	throws IOException {
 		return this.getRS485(baudRate, dataBitNum, stopBitNum, parity);
 	}
-
-	/**
-	 * 蓝色灯
-	 * 
-	 * @return
-	 */
-	public TiLED blueLED() {
-		return blueLED;
-	}
-
-	/**
-	 * 绿色灯
-	 * 
-	 * @return
-	 */
-	public TiLED greenLED() {
-		return greenLED;
-	}
-
 }

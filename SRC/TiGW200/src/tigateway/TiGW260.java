@@ -2,7 +2,6 @@ package tigateway;
 
 import java.io.IOException;
 
-import tigateway.peripheral.TiLED;
 import tigateway.peripheral.TiVout;
 import tigateway.serialport.TiSerialPort;
 
@@ -12,11 +11,9 @@ import tigateway.serialport.TiSerialPort;
  * @author lemon
  *
  */
-public class TiGW260 {
+public class TiGW260 extends TiGateway{
 
 	private TiSerialPort rs485 = null;
-	private TiLED blueLED = new TiLED(0);
-	private TiLED greenLED = new TiLED(1);
 	private TiVout vout = null;
 
 	static final int uartId = 1;
@@ -68,26 +65,9 @@ public class TiGW260 {
 	 * @return
 	 * @throws IOException
 	 */
+	@Override
 	public TiSerialPort getSerialPort(int id, int baudRate, int dataBitNum, int stopBitNum, int parity)	throws IOException {
 		return this.getRS485(baudRate, dataBitNum, stopBitNum, parity);
-	}
-
-	/**
-	 * 蓝色灯
-	 * 
-	 * @return
-	 */
-	public TiLED blueLED() {
-		return blueLED;
-	}
-
-	/**
-	 * 绿色灯
-	 * 
-	 * @return
-	 */
-	public TiLED greenLED() {
-		return greenLED;
 	}
 
 	/**
@@ -96,6 +76,7 @@ public class TiGW260 {
 	 * @return
 	 * @throws IOException
 	 */
+	@Override
 	public TiVout vout() throws IOException {
 		if (this.vout == null) {
 			this.vout = new TiVout(voutGpio);

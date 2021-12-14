@@ -2,7 +2,6 @@ package tigateway;
 
 import java.io.IOException;
 
-import tigateway.peripheral.TiLED;
 import tigateway.peripheral.WatchDog;
 import tigateway.serialport.TiSerialPort;
 
@@ -12,11 +11,9 @@ import tigateway.serialport.TiSerialPort;
  * @author lemon
  *
  */
-public class TiGW200 {
+public class TiGW200 extends TiGateway{
 
 	private TiSerialPort[] rs485chn = new TiSerialPort[2];
-	private TiLED blueLED = new TiLED(0);
-	private TiLED greenLED = new TiLED(1);
 
 	private boolean isGW210 = false;
 	private static TiGW200 instance;
@@ -110,28 +107,11 @@ public class TiGW200 {
 	 * @return
 	 * @throws IOException
 	 */
+	@Override
 	public TiSerialPort getSerialPort(int id, int baudRate, int dataBitNum, int stopBitNum, int parity)	throws IOException {
 		return getRS485ById(id, baudRate, dataBitNum, stopBitNum, parity);
 	}
 
-
-	/**
-	 * 蓝色灯
-	 * 
-	 * @return
-	 */
-	public TiLED blueLED() {
-		return blueLED;
-	}
-
-	/**
-	 * 绿色灯
-	 * 
-	 * @return
-	 */
-	public TiLED greenLED() {
-		return greenLED;
-	}
 
 	/**
 	 * uart id: tigw200 : 4 and 5 , tigw210 : 1 and 3

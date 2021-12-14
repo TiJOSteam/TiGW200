@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>TiGateway</groupId>
   <artifactId>TiGW</artifactId>
-  <version>2.0.5</version>
+  <version>2.0.6</version>
   <description>TiGateway Hardware Access Packge</description>
    <properties>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
