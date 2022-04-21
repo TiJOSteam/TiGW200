@@ -2,11 +2,7 @@ package tigateway.protocol.hostlink;
 
 import java.io.IOException;
 
-import tigateway.TiGW100;
-import tigateway.TiGW200;
-import tigateway.TiGateway;
 import tigateway.serialport.TiSerialPort;
-import tijos.framework.util.Delay;
 import tijos.framework.util.Formatter;
 
 public class HostLink {

@@ -29,6 +29,8 @@ public abstract class TiGateway {
 			return TiGW260.getInstance();
 		case "tigw400":
 			return TiGW400.getInstance();
+		case "tigw50":
+			return TiGW50.getInstance(); 
 		default:
 			return TiGW200.getInstance();
 		}
@@ -60,6 +62,10 @@ public abstract class TiGateway {
 		throw new IOException("not supported");
 	}
 
+	public void digitalOpen(int id, boolean in) throws IOException {
+		throw new IOException("not supported");		
+	}
+	
 	/**
 	 * 数字输出控制 DO
 	 * 

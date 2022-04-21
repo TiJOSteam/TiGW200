@@ -3,6 +3,11 @@ package tigateway;
 import java.io.IOException;
 
 import tigateway.serialport.TiSerialPort;
+import tijos.framework.platform.lte.TiLTE;
+import tijos.framework.platform.lte.TiLTECSQ;
+import tijos.framework.platform.lte.TiLTECell;
+import tijos.framework.platform.peripheral.TiLight;
+import tijos.framework.util.Delay;
 
 public class TiGW100 extends TiGateway {
 
@@ -46,7 +51,7 @@ public class TiGW100 extends TiGateway {
 	}
 
 	/**
-	 * 获取第1个通道RS485端口, 用于与其它型号产品兼容
+	 * 获取RS232端口, 用于与其它型号产品兼容
 	 * 
 	 * @param baudRate   波特率
 	 * @param dataBitNum 数据位
@@ -83,6 +88,61 @@ public class TiGW100 extends TiGateway {
 		} else {
 			return this.getRS232(baudRate, dataBitNum, stopBitNum, parity);
 		}
+	}
+
+	public static void main(String[] args) {
+		try {
+
+			TiLTE lte = TiLTE.getInstance();
+
+			lte.startup(20);
+
+			TiLight light = TiLight.getInstance();
+
+			System.out.println("lte status. " + lte.getNetworkStatus());
+
+			light.turnOn(0);
+
+			System.out.println("imei=" + lte.getIMEI());
+			System.out.println("imsi=" + lte.getIMSI());
+			System.out.println("iccid=" + lte.getICCID());
+			System.out.println("ip=" + lte.getPDPIP());
+			System.out.println("apn=" + lte.getAPN());
+			System.out.println("rssi=" + lte.getRSSI());
+
+			TiLTECSQ csq = lte.getCSQ();
+			System.out.println("csq.rssi=" + csq.getRSSI());
+
+			TiLTECell cell = lte.getCellInfo();
+
+			System.out.println("cell.mcc=" + cell.getMCC());
+			System.out.println("cell.mnc=" + cell.getMNC());
+			System.out.println("cell.lac=" + cell.getLAC());
+			System.out.println("cell.ci=" + cell.getCI());
+
+			System.out.println("register status=" + lte.getNetworkStatus());
+
+			TiGW100.getInstance().greenLED().turnOn();
+			
+			TiSerialPort sp = TiGW100.getInstance().getSerialPort(1, 9600, 8, 1, 0);
+			sp.write("this is test".getBytes());
+			Delay.msDelay(100);
+			String resp = new String(sp.read(1000));
+			
+			System.out.println("resp " +resp);
+			
+			Delay.msDelay(1000);
+
+			TiGW100.getInstance().greenLED().turnOff();
+			
+			
+
+			System.exit(0);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 }
